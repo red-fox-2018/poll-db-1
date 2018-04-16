@@ -15,11 +15,13 @@ select count(*) as totalVote, politicians.name
   where politicians.name like '%Adam%' group by politicians.name;
 
 -- SOAL 4
--- select
---     count(*) as totalVote,
---     politicians.name,
---     politicians.party,
---     politicians.location
---   from votes
---   join politicians on votes.politicianId = politicians.id group by politicians.name
---   order by totalVote desc limit 3;
+select
+    count(*) as totalVote,
+    politicians.name,
+    politicians.party,
+    politicians.location
+  from votes
+  join politicians on votes.politicianId = politicians.id group by politicians.name
+  order by totalVote desc limit 3;
+
+-- SOAL 5
