@@ -83,29 +83,85 @@ class Model {
   }
 }
 
+class CreateUpdateDelete {
+  static insertData(tableName, objData) {
+    let query;
+
+    if (tableName === 'Politicians') {
+      query = `INSERT INTO Politicians
+               VALUES (NULL, "${objData.name}", "${objData.party}", "${objData.location}", "${objData.grade_current}");`;
+    } else if (tableName === 'Voters') {
+      query = `INSERT INTO Voters
+               VALUES (NULL, "${objData.first_name}", "${objData.last_name}", "${objData.gender}", "${objData.age}");`;
+    } else if (tableName === 'Votes') {
+      query = `INSERT INTO Votes
+               VALUES (NULL, "${objData.voterId}", "${objData.politicianId}");`;
+    }
+
+    db.run(query, data => {
+      console.log('Data berhasil dimasukkan');
+    });
+  }
+
+  static updateData(tableName, column, value, id) {
+    let query = `UPDATE "${tableName}"
+                 SET "${column}" = "${value}"
+                 WHERE id = ${id};`;;
+
+    db.run(query, data => {
+      console.log('Data berhasil diperbaharui');
+    });
+  }
+
+  static deleteData(tableName, id) {
+    let query = `DELETE FROM "${tableName}"
+                 WHERE id = ${id};`;
+
+    db.run(query, data => {
+      console.log('Data berhasil dihapus');
+    });
+  }
+}
+
 // Release 1
 // INSERT data from csv file
 // Model.insertDataPoliticians();
 // Model.insertDataVoters();
 // Model.insertDataVotes();
 
+// Release 2
+// INSERT Data to database.db
+// CreateUpdateDelete.insertData('Politicians', {name: 'Ihsan', party: 'M', location: 'RM', grade_current: '13.73585922'});
+// CreateUpdateDelete.insertData('Voters', {first_name: 'Ihsan', last_name: 'Maulana', gender: 'male', age: 21});
+// CreateUpdateDelete.insertData('Votes', {voterId: '152', politicianId: '7'});
+
+// UPDATE Data to database.db by id
+// CreateUpdateDelete.updateData('Politicians', 'name', 'Ihsan Maulana', 23);
+// CreateUpdateDelete.updateData('Voters', 'age', 22, 151);
+// CreateUpdateDelete.updateData('Votes', 'voterId', '151', 164);
+
+// DELETE Data to database.db by id
+// CreateUpdateDelete.deleteData('Politicians', 23);
+// CreateUpdateDelete.deleteData('Voters', 151);
+// CreateUpdateDelete.deleteData('Votes', 164);
+
 // Release 3
-Model.query(`SELECT name, party, grade_current 
-             FROM Politicians 
-             WHERE grade_current > 9 OR grade_current < 11 AND party = "R";`);
-Model.query(`SELECT COUNT(*) as totalVote, name 
-             FROM Politicians
-             JOIN Votes ON Votes.politicianId = Politicians.id
-             WHERE name = "Olympia Snowe";`);
-Model.query(`SELECT COUNT(*) as totalVote, name FROM Politicians
-             JOIN Votes ON Votes.politicianId = Politicians.id
-             WHERE name LIKE "Adam%"
-             GROUP BY Politicians.id;`);
-Model.query(`SELECT COUNT(*) as totalVote, name FROM Politicians
-             JOIN Votes ON Votes.politicianId = Politicians.id
-             GROUP BY Politicians.id 
-             ORDER BY totalVote DESC LIMIT 3;`);
-Model.query(`SELECT Voters.first_name, Voters.last_name, Voters.gender, Voters.age FROM Votes
-             JOIN Politicians ON Politicians.id= Votes.politicianId
-             JOIN Voters ON Voters.id= Votes.VoterId
-             WHERE Politicians.name = "Olympia Snowe";`);
+// Model.query(`SELECT name, party, grade_current 
+//              FROM Politicians 
+//              WHERE grade_current > 9 OR grade_current < 11 AND party = "R";`);
+// Model.query(`SELECT COUNT(*) as totalVote, name 
+//              FROM Politicians
+//              JOIN Votes ON Votes.politicianId = Politicians.id
+//              WHERE name = "Olympia Snowe";`);
+// Model.query(`SELECT COUNT(*) as totalVote, name FROM Politicians
+//              JOIN Votes ON Votes.politicianId = Politicians.id
+//              WHERE name LIKE "Adam%"
+//              GROUP BY Politicians.id;`);
+// Model.query(`SELECT COUNT(*) as totalVote, name FROM Politicians
+//              JOIN Votes ON Votes.politicianId = Politicians.id
+//              GROUP BY Politicians.id 
+//              ORDER BY totalVote DESC LIMIT 3;`);
+// Model.query(`SELECT Voters.first_name, Voters.last_name, Voters.gender, Voters.age FROM Votes
+//              JOIN Politicians ON Politicians.id= Votes.politicianId
+//              JOIN Voters ON Voters.id= Votes.VoterId
+//              WHERE Politicians.name = "Olympia Snowe";`);
