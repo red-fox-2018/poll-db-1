@@ -1,0 +1,2 @@
+SELECT name,party,grade_current FROM politicians WHERE party='R' 
+AND grade_current BETWEEN 9 AND 11;

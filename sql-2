@@ -1,0 +1,4 @@
+SELECT COUNT(*) AS totalVote,politicians.name FROM votes 
+JOIN politicians
+WHERE politicianId = (SELECT id FROM politicians WHERE name = 'Olympia Snowe')
+AND politicians.name = 'Olympia Snowe'

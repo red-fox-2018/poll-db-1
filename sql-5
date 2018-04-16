@@ -1,0 +1,4 @@
+SELECT voters.first_name,voters.last_name,voters.gender,voters.age FROM voters
+join votes
+ON voters.id = votes.voterId
+WHERE votes.politicianId = (SELECT id FROM politicians WHERE politicians.name='Olympia Snowe')
