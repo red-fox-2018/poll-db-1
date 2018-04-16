@@ -1,3 +1,4 @@
+import { BADFAMILY } from 'dns';
 
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./poll.db');
@@ -18,9 +19,9 @@ class Model {
       db.run(`INSERT INTO votes VALUES (null, ${voterId}, ${politicianId});`);
     })
   }
-  static updatePoliticians(id) {
+  static deletePoliticians(id) {
     db.serialize(function() {
-      db.run(`INSERT INTO votes VALUES (null, ${voterId}, ${politicianId});`);
+      db.run(`DELETE votes VALUES (null, ${voterId}, ${politicianId});`);
     })
   }
 }
