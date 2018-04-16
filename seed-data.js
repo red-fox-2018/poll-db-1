@@ -8,25 +8,28 @@ const Add = require('./add.js')
 
 class Insert{
     static politician(name, party, location, grade_current){
-        db.run(`INSERT INTO Politicians(name,party,location,grade_current) VALUES (?,?,?,?)`, name, party, location, grade_current)
+        // db.run(`INSERT INTO Politicians(name,party,location,grade_current) VALUES (?,?,?,?)`, name, party, location, grade_current)
+   
+        db.run(`INSERT INTO Politicians(name, party, location, grade_current) VALUES ($name,$party,$location,$grade_current)`, {$name:name, $party:party, $location:location, $grade_current:grade_current})
     }
-    static Voter(first_name, last_name, gender, age){
-        db.run(`INSERT INTO Voters(first_name, last_name, gender, age) VALUES (?,?,?,?)`, first_name, last_name, gender, age)
+    static voter(first_name, last_name, gender, age){
+        // db.run(`INSERT INTO Voters(first_name, last_name, gender, age) VALUES (?,?,?,?)`, first_name, last_name, gender, age)
+        db.run(`INSERT INTO Voters(first_name, last_name, gender, age) VALUES ($first_name, $last_name, $gender, $age)`, { $first_name: first_name, $last_name: last_name, $gender: gender, $age: age})
     }
     static vote(voterId, politicianId){
-        db.run(`INSERT INTO Voters(voterId, politicianId) VALUES (?,?)`, voterId, politicianId)
+        // db.run(`INSERT INTO Votes(voterId, politicianId) VALUES (?,?)`,voterId, politicianId)
+        db.run(`INSERT INTO Votes(voterId, politicianId) VALUES ($voterId, $politicianId)`, { $voterId: voterId, $politicianId: politicianId})
     }
 }
 
 function Update(table,value,change_value,id) {
     db.run(`UPDATE ${table} SET ${value}  =  '${change_value}' WHERE id = ${id}`)
+   
 }
 
 function Delete(table,id) {
     db.run(`DELETE FROM ${table} WHERE id = ${id}`)
 }
-
-
 
 db.serialize(function (err) {
     if (err) {
@@ -73,7 +76,9 @@ db.serialize(function (err) {
             console.log('----------- Question No.5-----------')
             console.log(rows)
             console.log()
-        })
+        }) 
+
+
     // Add.politicians('politicians.csv', function (data) {
     //     var insert = db.prepare('INSERT INTO Politicians(name,party,location,grade_current) VALUES (?,?,?,?)');        
     //     data.forEach(function (politician) {
@@ -96,3 +101,5 @@ db.serialize(function (err) {
 });
 
 // db.close();//your code here
+
+
