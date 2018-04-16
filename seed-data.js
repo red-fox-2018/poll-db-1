@@ -157,7 +157,7 @@ class CreateUpdateDelete {
 //              JOIN Votes ON Votes.politicianId = Politicians.id
 //              WHERE name LIKE "Adam%"
 //              GROUP BY Politicians.id;`);
-// Model.query(`SELECT COUNT(*) as totalVote, name FROM Politicians
+// Model.query(`SELECT COUNT(*) as totalVote, name, party, location FROM Politicians
 //              JOIN Votes ON Votes.politicianId = Politicians.id
 //              GROUP BY Politicians.id 
 //              ORDER BY totalVote DESC LIMIT 3;`);
