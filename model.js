@@ -4,26 +4,36 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./poll.db');
 
 class Model {
-  static addOnePoliticians(name, party, location, gradeCurrent) {
+  static insertPoliticians(name, party, location, gradeCurrent) {
     db.serialize(function() {
       db.run(`INSERT INTO politicians VALUES (null, '${name}', '${party}', '${location}', ${gradeCurrent});`);
     })
   }
-  static addOneVoters(firstName, lastName, gender, age) {
+  static insertVoters(firstName, lastName, gender, age) {
     db.serialize(function() {
       db.run(`INSERT INTO voters VALUES (null, '${firstName}', '${lastName}', '${gender}', ${age});`);
     })
   }
-  static addOneVotes(voterId, politicianId) {
+  static insertVotes(voterId, politicianId) {
     db.serialize(function() {
       db.run(`INSERT INTO votes VALUES (null, ${voterId}, ${politicianId});`);
     })
   }
   static deletePoliticians(id) {
     db.serialize(function() {
-      db.run(`DELETE votes VALUES (null, ${voterId}, ${politicianId});`);
+      db.run(`DELETE FROM politicians WHERE id = ${id};`);
+    })
+  }
+  static deleteVoters(id) {
+    db.serialize(function() {
+      db.run(`DELETE FROM voters WHERE id = ${id};`);
+    })
+  }
+  static deleteVotes(id) {
+    db.serialize(function() {
+      db.run(`DELETE FROM votes WHERE id = ${id};`);
     })
   }
 }
 
-Model.addOneVoters('Iswanul', 'Umam', 'male', 23);
+// Model.insertVoters('Iswanul', 'Umam', 'male', 23);
