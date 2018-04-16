@@ -21,7 +21,7 @@ function seedVoters() {
   db.serialize(function() {
     fs.readFile('voters.csv', 'utf8', (err, result) => {
       let rows = result.split('\n');
-      for (let i = 25; i < rows.length; i++) {
+      for (let i = 1; i < rows.length; i++) {
         let newRow = rows[i].split(',');
         if (newRow.length == 4) {
           db.run(`INSERT INTO voters VALUES (null, '${newRow[0]}', '${newRow[1]}', '${newRow[2]}', ${Number(newRow[3])});`);
