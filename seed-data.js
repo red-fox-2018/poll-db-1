@@ -39,9 +39,13 @@ class Poll{
     for(let dataPoll in this){
       this[dataPoll].forEach((data)=>{
         if(dataPoll === 'votes'){
+          db.serialize(function() {
             db.run(`INSERT INTO ${dataPoll} VALUES(null,"${data[0]}","${data[1]}");`)
+          })
         }else{
+          db.serialize(function() {
             db.run(`INSERT INTO ${dataPoll} VALUES(null,"${data[0]}","${data[1]}","${data[2]}","${data[3]}");`)
+          })
         }
       })
     }
