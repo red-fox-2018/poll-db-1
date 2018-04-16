@@ -23,21 +23,9 @@ class Crud {
   }
 
   static updateData(tableName, column, value, id) {
-    let query;
-
-    if (tableName === 'Politicians') {
-      query = `UPDATE Politicians
-               SET "${column}" = "${value}"
-               WHERE id = ${id};`;
-    } else if (tableName === 'Voters') {
-      query = `UPDATE Voters
-               SET "${column}" = "${value}"
-               WHERE id = ${id};`;
-    } else if (tableName === 'Votes') {
-      query = `UPDATE Votes
-               SET "${column}" = "${value}"
-               WHERE id = ${id};`;
-    }
+    let query = `UPDATE "${tableName}"
+                 SET "${column}" = "${value}"
+                 WHERE id = ${id};`;;
 
     db.run(query, data => {
       console.log('Data berhasil diperbaharui');
@@ -45,18 +33,8 @@ class Crud {
   }
 
   static deleteData(tableName, id) {
-    let query;
-
-    if (tableName === 'Politicians') {
-      query = `DELETE FROM Politicians
-               WHERE id = ${id};`;
-    } else if (tableName === 'Voters') {
-      query = `DELETE FROM Voters
-               WHERE id = ${id};`;
-    } else if (tableName === 'Votes') {
-      query = `DELETE FROM Votes
-               WHERE id = ${id};`;
-    }
+    let query = `DELETE FROM "${tableName}"
+                 WHERE id = ${id};`;
 
     db.run(query, data => {
       console.log('Data berhasil dihapus');
@@ -70,11 +48,11 @@ class Crud {
 // Crud.insertData('Votes', {voterId: '152', politicianId: '7'});
 
 // UPDATE Data to database.db by id
-// Crud.updateData('Politicians', 'name', 'Ihsan Maulana', 21);
+// Crud.updateData('Politicians', 'name', 'Ihsan Maulana', 22);
 // Crud.updateData('Voters', 'age', 22, 151);
 // Crud.updateData('Votes', 'voterId', '151', 164);
 
 // DELETE Data to database.db by id
-// Crud.deleteData('Politicians', 21);
+// Crud.deleteData('Politicians', 22);
 // Crud.deleteData('Voters', 151);
 // Crud.deleteData('Votes', 164);
