@@ -75,9 +75,37 @@ class Model {
       });
     });
   }
+
+  static query(inputQuery) {
+    db.all(inputQuery, (err, rows) => {
+      console.log(rows);
+    });
+  }
 }
 
+// Release 1
 // INSERT data from csv file
 // Model.insertDataPoliticians();
 // Model.insertDataVoters();
 // Model.insertDataVotes();
+
+// Release 3
+Model.query(`SELECT name, party, grade_current 
+             FROM Politicians 
+             WHERE grade_current > 9 OR grade_current < 11 AND party = "R";`);
+Model.query(`SELECT COUNT(*) as totalVote, name 
+             FROM Politicians
+             JOIN Votes ON Votes.politicianId = Politicians.id
+             WHERE name = "Olympia Snowe";`);
+Model.query(`SELECT COUNT(*) as totalVote, name FROM Politicians
+             JOIN Votes ON Votes.politicianId = Politicians.id
+             WHERE name LIKE "Adam%"
+             GROUP BY Politicians.id;`);
+Model.query(`SELECT COUNT(*) as totalVote, name FROM Politicians
+             JOIN Votes ON Votes.politicianId = Politicians.id
+             GROUP BY Politicians.id 
+             ORDER BY totalVote DESC LIMIT 3;`);
+Model.query(`SELECT Voters.first_name, Voters.last_name, Voters.gender, Voters.age FROM Votes
+             JOIN Politicians ON Politicians.id= Votes.politicianId
+             JOIN Voters ON Voters.id= Votes.VoterId
+             WHERE Politicians.name = "Olympia Snowe";`);
