@@ -91,6 +91,71 @@ class seedData{
             })
         })
     }
+
+    // NO 1
+    static displayDataNo1(){
+        db.serialize(function(){
+            db.all("SELECT name,party,grade_current FROM politicians WHERE party = 'R' AND grade_current BETWEEN 9 AND 11",function (err,row){
+                if(err){
+                    throw err
+                }
+                console.log("Tampilkan nama Politicians, partai dan grade_current yg berada")
+                console.log(row)
+            })
+        })
+    }
+
+    //NO 2
+    static displayDataNo2(){
+        db.serialize(function(){
+            db.all("SELECT COUNT(*) AS 'totalvote',politicians.name FROM votes JOIN politicians ON votes.politicianId = politicians.id WHERE politicians.id = (SELECT id FROM politicians WHERE name = 'Olympia Snowe')",function (err,row){
+                if(err){
+                    throw err
+                }
+                console.log("\nHitung jumlah vote untuk politicians bernama Olympia Snowe")
+                console.log(row)
+            })
+        })
+    }
+
+    //NO 3
+    static displayDataNo3(){
+        db.serialize(function(){
+            db.all("SELECT politicians.name, COUNT(*) AS 'totalvote' FROM votes JOIN politicians ON votes.politicianId = politicians.id WHERE politicians.name LIKE 'Adam %' GROUP BY politicians.id",function (err,row){
+                if(err){
+                    throw err
+                }
+                console.log("\nHitung jumlah vote untuk politicians yg namanya mengandung kata adam")
+                console.log(row)
+            })
+        })
+    }
+
+    //NO 4
+    static displayDataNo4(){
+        db.serialize(function(){
+            db.all("SELECT COUNT(*) AS 'totalVote', politicians.name, politicians.party, politicians.location FROM politicians JOIN votes ON politicians.id = votes.politicianId GROUP BY politicians.name ORDER BY totalVote DESC LIMIT 3",function (err,row){
+                if(err){
+                    throw err
+                }
+                console.log("\nTampilkan 3 politicians beserta nama partai dan lokasi politicians yg memiliki suara terbanyak")
+                console.log(row)
+            })
+        })
+    }
+
+    //NO 5
+    static displayDataNo5(){
+        db.serialize(function(){
+            db.all("SELECT voters.first_name, voters.last_name, voters.gender, voters.age FROM voters JOIN votes ON voters.id = votes.voterId WHERE votes.politicianId = (SELECT id FROM politicians WHERE name = 'Olympia Snowe')",function (err,row){
+                if(err){
+                    throw err
+                }
+                console.log("\nTampilkan siapa saja yang melakukan voting ke politicians yg bernama Olympia Snowe")
+                console.log(row)
+            })
+        })
+    }
 }
 
 // seedData.insertDataFromCSV()
@@ -110,6 +175,11 @@ class seedData{
 // seedData.deleteData("politicians",21)
 // seedData.displayData("politicians")
 
+seedData.displayDataNo1()
+seedData.displayDataNo2()
+seedData.displayDataNo3()
+seedData.displayDataNo4()
+seedData.displayDataNo5()
 
 //QUERY DATABASE
 // 1. Tampilkan nama Politicians, partai dan grade_current yg berada
