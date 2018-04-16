@@ -1,6 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./poll.db');
 
+// ------------------ RELEASE 2 ------------------------
+
 class Model {
   static insertPoliticians(name, party, location, gradeCurrent) {
     db.serialize(function() {
@@ -34,4 +36,4 @@ class Model {
   }
 }
 
-Model.insertVoters('Nabila', 'Permata', 'female', 21);
+// Model.insertVoters('Nabila', 'Permata', 'female', 21);
