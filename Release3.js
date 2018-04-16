@@ -63,7 +63,7 @@ class Query {
    }
 
    static adam(){
-     db.all(`SELECT name,(SELECT COUNT(voters_id) FROM Votes WHERE Politicians.Politicians_id = Votes.Politicians_id)AS totalVote
+       db.all(`SELECT name,(SELECT COUNT(voters_id) FROM Votes WHERE Politicians.Politicians_id = Votes.Politicians_id)AS totalVote
              FROM POLITICIANS WHERE name LIKE '%Adam%'`,function(err,result){
        if(err){
          console.log(err);
@@ -88,6 +88,67 @@ class Query {
    }
 
 
+   static polDb21(){
+     db.all(`SELECT name,address,grade_current,
+             (SELECT COUNT(*) FROM Votes WHERE Votes.Politicians_id=Politicians.Politicians_id)as totalvotes
+             FROM Politicians WHERE grade_current < 9 ORDER BY totalvotes ASC `,function(err,result){
+       if(err){
+         console.log(err);
+       }else{
+         console.log(result);
+       }
+     })
+   }
+
+
+
+  static polDb22(){
+    db.all(`SELECT (SELECT name FROM Politicians
+            where Votes.Politicians_id=Politicians.Politicians_id) AS PoliticiansName,
+            (SELECT COUNT(voters_id) FROM Votes WHERE Politicians.Politicians_id = Votes.Politicians_id)AS totalVote,
+            (first_name || ' '||last_name)as voterName, gender
+            FROM Votes
+            INNER JOIN Voters on Votes.voters_id=Voters.voters_id
+            INNER JOIN Politicians on Votes.Politicians_id=Politicians.Politicians_id
+            WHERE totalvote > 10
+            ORDER BY totalvote DESC`,function(err,result){
+      if(err){
+        console.log(err);
+      }else{
+        console.log(result);
+      }
+    })
+  }
+
+  static polDb22(){
+    db.all(`SELECT (SELECT name FROM Politicians
+            where Votes.Politicians_id=Politicians.Politicians_id) AS PoliticiansName,
+            (SELECT COUNT(voters_id) FROM Votes WHERE Politicians.Politicians_id = Votes.Politicians_id)AS totalVote,
+            (first_name || ' '||last_name)as voterName, gender
+            FROM Votes
+            INNER JOIN Voters on Votes.voters_id=Voters.voters_id
+            INNER JOIN Politicians on Votes.Politicians_id=Politicians.Politicians_id
+            WHERE totalvote > 10
+            ORDER BY totalvote DESC`,function(err,result){
+      if(err){
+        console.log(err);
+      }else{
+        console.log(result);
+      }
+    })
+  }
+
+  static polDb23(){
+    db.all(`SELECT (SELECT COUNT(voters_id) FROM Votes WHERE Votes.voters_id = Voters.voters_id)
+            as totalvotes, (first_name || ' '||last_name) AS name,gender,age
+            FROM Voters WHERE totalVotes>1 ORDER BY totalVotes DESC`,function(err,result){
+      if(err){
+        console.log(err);
+      }else{
+        console.log(result);
+      }
+    })
+  }
 
 
 }
@@ -95,11 +156,14 @@ class Query {
 // Query.insertPoliticians('Faldhi','Gerindra','UK',13.03522892)
 //Query.DeletePoliticians(21)
 //Query.updatePoliticians('Faldhi')
-Query.selectBetween()
-Query.Snowe()
-Query.adam()
-Query.maxVote()
+// Query.selectBetween()
+// Query.Snowe()
+// Query.adam()
+// Query.maxVote()
 
+Query.polDb23()
+//Query.polDb22()
+//Query.polDb21()
 
 
 
