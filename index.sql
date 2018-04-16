@@ -25,3 +25,5 @@ select
   order by totalVote desc limit 3;
 
 -- SOAL 5
+select first_name, last_name, gender, age from voters join votes on voters.id = votes.voterId
+    where politicianId = (select id from politicians where name = 'Olympia Snowe')
