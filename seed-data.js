@@ -24,6 +24,7 @@ class Insert{
 
 function Update(table,value,change_value,id) {
     db.run(`UPDATE ${table} SET ${value}  =  '${change_value}' WHERE id = ${id}`)
+    db.run(`UPDATE ${table} SET ${value}  =  $change_value WHERE id = $id`,{$change_value:change_value,$id:id})
    
 }
 
@@ -35,48 +36,49 @@ db.serialize(function (err) {
     if (err) {
         console.log('error')
     }
-    db.all(`SELECT name,party,grade_current FROM politicians WHERE party='R' AND grade_current BETWEEN 9 AND 11;`, function (err,rows) {
-    console.log('----------- Question No.1-----------')
-    console.log(rows) 
-    console.log()
-    })
-    db.all(`SELECT COUNT(*) AS totalVote,politicians.name FROM votes 
-    JOIN politicians 
-    WHERE politicianId = (SELECT id FROM politicians WHERE name = 'Olympia Snowe') 
-    AND politicians.name = 'Olympia Snowe';`, function (err, rows) {
-        console.log('----------- Question No.2-----------')
-        console.log(rows)
-        console.log()
-    })
-    db.all(`SELECT politicians.name,COUNT(*) AS totalVote FROM politicians 
-    JOIN votes
-    ON politicians.id = votes.politicianId  
-    WHERE politicians.name LIKE '%Adam%'
-    GROUP BY politicians.name;`, function (err, rows) {
-        console.log('----------- Question No.3-----------')
-        console.log(rows)
-        console.log()
-    })
-    db.all(`WITH vote AS(
-    SELECT COUNT(*) AS totalVote,politicians.name,politicians.party,politicians.location FROM politicians
-    JOIN votes
-    ON politicians.id = votes.politicianId
-    GROUP BY politicians.name )
-    SELECT * FROM vote
-    ORDER BY totalVote Desc LIMIT 3;`, function (err, rows) {
-        console.log('----------- Question No.4-----------')
-        console.log(rows)
-        console.log()
-    })
-    db.all(`SELECT voters.first_name,voters.last_name,voters.gender,voters.age FROM voters
-    join votes
-    ON voters.id = votes.voterId
-    WHERE votes.politicianId = (SELECT id FROM politicians WHERE politicians.name='Olympia Snowe')
-`, function (err, rows) {
-            console.log('----------- Question No.5-----------')
-            console.log(rows)
-            console.log()
-        }) 
+    Update('votes','voterId',28,163)
+//     db.all(`SELECT name,party,grade_current FROM politicians WHERE party='R' AND grade_current BETWEEN 9 AND 11;`, function (err,rows) {
+//     console.log('----------- Question No.1-----------')
+//     console.log(rows) 
+//     console.log()
+//     })
+//     db.all(`SELECT COUNT(*) AS totalVote,politicians.name FROM votes 
+//     JOIN politicians 
+//     WHERE politicianId = (SELECT id FROM politicians WHERE name = 'Olympia Snowe') 
+//     AND politicians.name = 'Olympia Snowe';`, function (err, rows) {
+//         console.log('----------- Question No.2-----------')
+//         console.log(rows)
+//         console.log()
+//     })
+//     db.all(`SELECT politicians.name,COUNT(*) AS totalVote FROM politicians 
+//     JOIN votes
+//     ON politicians.id = votes.politicianId  
+//     WHERE politicians.name LIKE '%Adam%'
+//     GROUP BY politicians.name;`, function (err, rows) {
+//         console.log('----------- Question No.3-----------')
+//         console.log(rows)
+//         console.log()
+//     })
+//     db.all(`WITH vote AS(
+//     SELECT COUNT(*) AS totalVote,politicians.name,politicians.party,politicians.location FROM politicians
+//     JOIN votes
+//     ON politicians.id = votes.politicianId
+//     GROUP BY politicians.name )
+//     SELECT * FROM vote
+//     ORDER BY totalVote Desc LIMIT 3;`, function (err, rows) {
+//         console.log('----------- Question No.4-----------')
+//         console.log(rows)
+//         console.log()
+//     })
+//     db.all(`SELECT voters.first_name,voters.last_name,voters.gender,voters.age FROM voters
+//     join votes
+//     ON voters.id = votes.voterId
+//     WHERE votes.politicianId = (SELECT id FROM politicians WHERE politicians.name='Olympia Snowe')
+// `, function (err, rows) {
+//             console.log('----------- Question No.5-----------')
+//             console.log(rows)
+//             console.log()
+//         }) 
 
 
     // Add.politicians('politicians.csv', function (data) {

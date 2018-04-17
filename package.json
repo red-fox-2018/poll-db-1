@@ -1,0 +1,24 @@
+{
+  "name": "poll-db-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "add.js",
+  "dependencies": {
+    "live-server": "^1.2.0",
+    "sqlite3": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-fox-2018/poll-db-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/red-fox-2018/poll-db-1/issues"
+  },
+  "homepage": "https://github.com/red-fox-2018/poll-db-1#readme"
+}

@@ -1,5 +1,0 @@
-SELECT politicians.name,COUNT(*) AS totalVote FROM politicians
-JOIN votes
-ON politicians.id = votes.politicianId  
-WHERE politicians.name LIKE '%Adam%'
-GROUP BY politicians.name

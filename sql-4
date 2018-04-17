@@ -1,9 +1,0 @@
-WITH vote AS(
-SELECT COUNT(*) AS totalVote,politicians.name,politicians.party,politicians.location FROM politicians
-JOIN votes
-ON politicians.id = votes.politicianId
-GROUP BY politicians.name )
-
-SELECT * FROM vote
-ORDER BY totalVote Desc LIMIT 3;
-
